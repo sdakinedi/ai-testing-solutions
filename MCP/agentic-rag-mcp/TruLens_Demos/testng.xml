@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="EmailConfirmationTestSuite" parallel="false">
+    
+    <parameter name="browser" value="chrome"/>
+    
+    <test name="EmailConfirmationTests" preserve-order="true">
+        <classes>
+            <class name="com.marvelelectronics.tests.EmailConfirmationTest">
+                <methods>
+                    <include name="testSuccessfulOrderEmailConfirmation"/>
+                    <include name="testEmailContentValidation"/>
+                    <include name="testNoDuplicateEmailConfirmations"/>
+                    <include name="testEmailConfirmationMultipleProducts"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- Optional: Run tests with different browsers -->
+    <test name="EmailConfirmationTests_Firefox" preserve-order="true">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.marvelelectronics.tests.EmailConfirmationTest">
+                <methods>
+                    <include name="testSuccessfulOrderEmailConfirmation"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+</suite>

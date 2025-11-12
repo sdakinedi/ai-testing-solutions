@@ -1,0 +1,85 @@
+2025-03-20 20:08:40,164 - ERROR - Code execution failed: All arrays must be of the same length
+Code:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {
+    'Store_Number': [1320]*30,
+    'SKU_Coded': [6173050, 6174250, 6176200, 6176800, 6177250, 6177300, 6177350,
+                  6177700, 6178000, 6178250, 6179250, 6179300, 6179400, 6179450,
+                  6179500, 6179750, 6180550, 6182050, 6183750, 6184100, 6188550,
+                  6190050, 6190150, 6190200, 6190250, 6190350, 6190400, 6193750,
+                  6195350, 6195800],
+    'Product_Class_Code': [22875, 22875, 22975, 22800, 22975, 22800, 22800, 22875,
+                          22875, 22800, 24400, 22800, 24400, 24400, 24400, 22800,
+                          22975, 22975, 22850, 22975, 22950, 24425, 24425, 24425,
+                          24425, 22950, 22950, 22875, 24375, 22850],
+    'Sold_Date': ['2021-11-01'] * 30,
+    'Qty_Sold': [1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 1, 2, 1, 1, 3, 3,
+                 2, 5, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+    'Total_Sale_Value': [4.99, 0.89, 99.98, 14.97, 6.89, 9.99, 16.98, 3.19, 
+                         6.38, 16.59, 14.99, 9.98, 29.98, 14.99, 14.99, 
+                         39.98, 15.99, 7.99, 38.97, 59.97, 15.98, 19.95, 
+                         8.99, 8.99, 7.99, 6.99, 6.99, 6.99, 16.99, 25.72]
+}
+
+df = pd.DataFrame(data)
+df['Sold_Date'] = pd.to_datetime(df['Sold_Date'])
+
+# Grouping by Sold_Date and summing Quantity Sold
+df_grouped = df.groupby('Sold_Date')['Total_Sale_Value'].sum().reset_index()
+
+plt.figure(figsize=(10, 5))
+plt.plot(df_grouped['Sold_Date'], df_grouped['Total_Sale_Value'], marker='o')
+plt.title('A bar chart of sales by product SKU. Put the product SKU on the x-axis and the sales on the y-axis.')
+plt.xlabel('Date')
+plt.ylabel('Sales Value')
+plt.xticks(rotation=45)
+plt.grid()
+plt.tight_layout()
+plt.show()
+2025-03-20 20:08:40,165 - ERROR - Code execution failed: All arrays must be of the same length
+Code:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {
+    'Store_Number': [1320]*30,
+    'SKU_Coded': [
+        6173050, 6174250, 6176200, 6176800, 6177250, 6177300, 
+        6177350, 6177700, 6178000, 6178250, 6179250, 6179300, 
+        6179400, 6179450, 6179500, 6179750, 6180550, 6182050, 
+        6183750, 6184100, 6188550, 6190050, 6190150, 6190200, 
+        6190250, 6190350, 6190400, 6193750, 6195350, 6195800
+    ],
+    'Product_Class_Code': [22875, 22875, 22975, 22800, 22975, 22800, 
+                           22800, 22875, 22875, 22800, 24400, 22800, 
+                           24400, 24400, 24400, 22800, 22975, 22975, 
+                           22850, 22975, 22950, 24425, 24425, 24425, 
+                           24425, 22950, 22950, 22875, 24375, 22850
+                          ],
+    'Sold_Date': ['2021-11-01']*30,
+    'Qty_Sold': [1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 2, 1, 
+                 1, 2, 1, 1, 3, 3, 2, 5, 1, 1, 1, 1, 1, 1, 
+                 1, 1, 3, 3],
+    'Total_Sale_Value': [
+        4.99, 0.89, 99.98, 14.97, 6.89, 9.99, 
+        16.98, 3.19, 6.38, 16.59, 14.99, 9.98, 
+        29.98, 14.99, 14.99, 39.98, 15.99, 7.99, 
+        38.97, 59.97, 15.98, 19.95, 8.99, 8.99, 
+        7.99, 6.99, 6.99, 6.99, 16.99, 25.72
+    ],
+    'On_Promo': [0]*30
+}
+
+df = pd.DataFrame(data)
+df['Sold_Date'] = pd.to_datetime(df['Sold_Date'])
+
+plt.figure(figsize=(12, 6))
+plt.plot(df['Sold_Date'], df['Total_Sale_Value'], marker='o')
+plt.title('A bar chart of sales by product SKU. Put the product SKU on the x-axis and the sales on the y-axis.')
+plt.xlabel('Date')
+plt.ylabel('Sales Value')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()

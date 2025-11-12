@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "agentic-rag-server": {
+      "command": "C:\\Users\\Satyaprasad_Dakinedi\\Desktop\\AI_Solutions_Implementations\\MCP\\agentic-rag-mcp\\venv\\Scripts\\python.exe",
+      "args": ["rag_mcp_server1.py"],
+      "cwd": "C:\\Users\\Satyaprasad_Dakinedi\\Desktop\\AI_Solutions_Implementations\\MCP\\agentic-rag-mcp",
+      "env": {
+        "PYTHONPATH": "C:\\Users\\Satyaprasad_Dakinedi\\Desktop\\AI_Solutions_Implementations\\MCP\\agentic-rag-mcp"
+      }
+    }
+  }
+}

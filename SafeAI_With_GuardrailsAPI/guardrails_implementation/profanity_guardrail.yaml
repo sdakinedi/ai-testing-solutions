@@ -1,0 +1,11 @@
+# profanity_guardrail.yaml
+version: 0.1
+
+guards:
+  - id: content_safety_guard
+    description: "Guard against unsafe content including profanity and harmful content"
+    validators:
+      - type: guardrails/profanity_free
+        on_fail: exception
+      # - type: guardrails/toxic_language
+      #   on_fail: exception
