@@ -85,11 +85,10 @@ writer = autogen.ConversableAgent(
 
 
 ### Define the group chat..
-
 groupchat = autogen.GroupChat(
     agents=[user_proxy, engineer, writer, executor, planner],
     messages=[],
-    max_round=10,
+    max_round=10
 )
 
 # manager to manage the group conversation

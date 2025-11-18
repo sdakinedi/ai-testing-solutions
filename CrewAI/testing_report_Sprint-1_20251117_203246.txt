@@ -1,0 +1,242 @@
+{
+  "Test_Strategy_Summary": {
+    "Test_Scope_and_Objectives": {
+      "Scope": "Booking a ride from location A to location B using the Uber app",
+      "Objectives": [
+        "Ensure accurate display of available ride options",
+        "Verify estimated fare and arrival time functionality",
+        "Validate display of driver details and route information",
+        "Test alternative route suggestions for unexpected road closures",
+        "Verify rider alerts on significant driver route deviations",
+        "Prompt rider feedback at the end of the ride"
+      ]
+    },
+    "Types_of_Testing_Required": [
+      "Functional Testing",
+      "UI Testing",
+      "API Testing"
+    ],
+    "Risk_Assessment_and_Mitigation": {
+      "Risks": [
+        "Incorrect display of ride options",
+        "Inaccurate fare estimation",
+        "Failure to show driver details"
+      ],
+      "Mitigation": [
+        "Comprehensive test coverage",
+        "Real-world scenario simulations",
+        "Continuous monitoring during testing"
+      ]
+    },
+    "Testing_Approach_and_Priorities": {
+      "Approach": "Combination of manual and automated testing",
+      "Priorities": [
+        "Functional testing of ride booking process",
+        "UI testing for intuitive user experience",
+        "API testing for data accuracy"
+      ]
+    },
+    "Entry_and_Exit_Criteria": {
+      "Entry_Criteria": "Uber app installed, test environment set up",
+      "Exit_Criteria": "All test cases executed, critical defects fixed"
+    },
+    "Test_Environment_Requirements": [
+      "Mobile devices for app compatibility testing",
+      "Internet connection for real-time data verification"
+    ],
+    "Assumptions_and_Dependencies": {
+      "Assumption": "Users have stable internet connections",
+      "Dependency": "Availability of test data for location A and location B"
+    }
+  },
+  "Acceptance_Criteria_and_Scenarios": {
+    "Acceptance_Criteria": [
+      "Given that I am a rider in the Uber app, when I enter my pick-up location A and drop-off location B, then I should see a list of available ride options.",
+      "Given that I select a ride option, when I confirm my booking, then I should receive an estimated fare and arrival time.",
+      "Given that I confirm my booking, when a driver is assigned to me, then I should see the driver details and route information.",
+      "Given that a driver is en route to my pick-up location, when there is an unexpected road closure, then the app should provide alternative route suggestions.",
+      "Given that I am in a booked ride, when the driver significantly deviates from the expected route, then I should receive alerts and notifications prompting me for feedback at the end of the ride."
+    ],
+    "Gherkin_Scenarios": {
+      "Scenario_1": "Rider books a ride successfully",
+      "Scenario_2": "Driver details and route information displayed",
+      "Scenario_3": "Unexpected road closure with alternative routes",
+      "Scenario_4": "Significant driver route deviation alert",
+      "Scenario_5": "No available ride options",
+      "Scenario_6": "Inaccurate fare estimation",
+      "Scenario_7": "Failure to assign driver",
+      "Scenario_8": "Internet connection loss during ride",
+      "Scenario_9": "Unexpected app crash during booking"
+    }
+  },
+  "Test_Cases": [
+    {
+      "TC_ID": "TC_01",
+      "Requirement_Mapping": "AC1, Scenario 1",
+      "Test_Description": "Positive test for booking a ride successfully",
+      "Test_Steps": [
+        "Open Uber app as a rider"
+      ],
+      "Test_Type": "Positive",
+      "Priority": "Critical",
+      "Test_Data": "Pick-up location: A, Drop-off location: B",
+      "Expected_Result": "List of available ride options displayed",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_02",
+      "Requirement_Mapping": "AC1, Scenario 5",
+      "Test_Description": "Negative test for no available ride options",
+      "Test_Steps": [
+        "Open Uber app as a rider"
+      ],
+      "Test_Type": "Negative",
+      "Priority": "Critical",
+      "Test_Data": "Pick-up location: A, Drop-off location: B (with no available rides)",
+      "Expected_Result": "Information message displayed: No rides available",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_03",
+      "Requirement_Mapping": "AC2, Scenario 1",
+      "Test_Description": "Positive test for receiving fare and arrival time",
+      "Test_Steps": [
+        "Select ride option and confirm booking"
+      ],
+      "Test_Type": "Positive",
+      "Priority": "High",
+      "Test_Data": "Ride option selected",
+      "Expected_Result": "Estimated fare and arrival time displayed",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_04",
+      "Requirement_Mapping": "AC2, Scenario 6",
+      "Test_Description": "Negative test for inaccurate fare estimation",
+      "Test_Steps": [
+        "Confirm booking with inaccurate fare estimation"
+      ],
+      "Test_Type": "Negative",
+      "Priority": "High",
+      "Test_Data": "Inaccurate fare estimated",
+      "Expected_Result": "Alert shown about fare estimation discrepancy",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_05",
+      "Requirement_Mapping": "AC3, Scenario 2",
+      "Test_Description": "Positive test for displaying driver details and route information",
+      "Test_Steps": [
+        "Driver assigned to booked ride"
+      ],
+      "Test_Type": "Positive",
+      "Priority": "High",
+      "Test_Data": "Driver assigned",
+      "Expected_Result": "Driver details and route information visible",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_06",
+      "Requirement_Mapping": "AC3, Scenario 7",
+      "Test_Description": "Negative test for failure to assign driver",
+      "Test_Steps": [
+        "No driver assigned after booking"
+      ],
+      "Test_Type": "Negative",
+      "Priority": "High",
+      "Test_Data": "No driver assigned",
+      "Expected_Result": "Notification displayed about issue and alternative options provided",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_07",
+      "Requirement_Mapping": "AC4, Scenario 3",
+      "Test_Description": "Positive test for providing alternative routes due to unexpected road closure",
+      "Test_Steps": [
+        "Unexpected road closure during ride"
+      ],
+      "Test_Type": "Medium",
+      "Priority": "Unexpected road closure",
+      "Test_Data": "App shows alternative route suggestions",
+      "Expected_Result": "Yes",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_08",
+      "Requirement_Mapping": "AC5, Scenario 4",
+      "Test_Description": "Positive test for receiving notifications on significant driver deviation",
+      "Test_Steps": [
+        "Driver significantly deviates from expected route"
+      ],
+      "Test_Type": "Medium",
+      "Priority": "Significant deviation from expected route",
+      "Test_Data": "Alerts and feedback notifications prompted",
+      "Expected_Result": "Yes",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_09",
+      "Requirement_Mapping": "AC6, Scenario 8",
+      "Test_Description": "Negative test for internet connection loss during ride",
+      "Test_Steps": [
+        "Loss of internet connection during ride"
+      ],
+      "Test_Type": "Medium",
+      "Priority": "Loss of internet connection",
+      "Test_Data": "App stores route information locally and alerts user",
+      "Expected_Result": "Yes",
+      "Automatable": "Yes"
+    },
+    {
+      "TC_ID": "TC_10",
+      "Requirement_Mapping": "N/A",
+      "Test_Description": "Positive test for unexpected app crash during booking",
+      "Test_Steps": [
+        "Booking a ride and app crashes unexpectedly"
+      ],
+      "Test_Type": "Low",
+      "Priority": "App crash during booking",
+      "Test_Data": "Detailed error message displayed, app continues from last state",
+      "Expected_Result": "Yes",
+      "Automatable": "Yes"
+    }
+  ],
+  "Automation_Code": {
+    "Technology_Stack": {
+      "Language": "Python",
+      "Framework": "Selenium with pytest"
+    },
+    "Code_Review_Results": {
+      "List_of_Issues_Found": [
+        {
+          "Issue": "The setup fixture method in test_uber_app.py should not be marked with @pytest.fixture(autouse=True) as it is not intended to be a fixture.",
+          "Severity": "Minor"
+        },
+        {
+          "Issue": "UberAppPage.py does not fully implement the Page Object Model (POM) pattern, lacks separation of page actions and assertions.",
+          "Severity": "Major"
+        }
+      ],
+      "Recommendations_for_Improvement": [
+        "Refactor UberAppPage.py to separate page actions and assertions strictly following the POM pattern.",
+        "Revise the setup method in test_uber_app.py to remove @pytest.fixture(autouse=True) decorator."
+      ],
+      "Code_Quality_Score": 8
+    }
+  },
+  "Summary_Statistics": {
+    "Total_Tests": 10,
+    "Automatable_Count": 10,
+    "Priorities_Breakdown": {
+      "Critical": 3,
+      "High": 3,
+      "Medium": 3,
+      "Low": 1
+    }
+  },
+  "Metadata": {
+    "Timestamp": "YYYY-MM-DDTHH:MM:SSZ",
+    "User_Story": "As a user, I want to successfully book a ride using the Uber app.",
+    "Iteration": "Sprint X"
+  }
+}
