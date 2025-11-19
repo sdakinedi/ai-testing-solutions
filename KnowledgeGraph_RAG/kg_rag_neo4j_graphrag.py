@@ -1,6 +1,7 @@
 import os
 import asyncio
 from pathlib import Path
+from urllib import response
 from neo4j import GraphDatabase
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 from neo4j_graphrag.llm import OpenAILLM
@@ -10,16 +11,27 @@ from neo4j_graphrag.indexes import create_vector_index
 from neo4j_graphrag.retrievers import VectorCypherRetriever
 from neo4j_graphrag.generation import GraphRAG
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Configuration
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-NEO4J_URI = "neo4j+s://3f713ff7.databases.neo4j.io"
-NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "Vi4P4Y53IA99vUfrklzp9OCYMX2s6M313JC5xYCLWys"
-PDF_PATH = r"C:\Users\Satyaprasad_Dakinedi\Desktop\guideToScrum.pdf"
+# NEO4J_URI = "neo4j+s://3f713ff7.databases.neo4j.io"
+# NEO4J_USERNAME = "neo4j"
+# NEO4J_PASSWORD = "Vi4P4Y53IA99vUfrklzp9OCYMX2s6M313JC5xYCLWys"
+
+PDF_PATH = r"C:\\Users\\Satyaprasad_Dakinedi\\Desktop\\guideToScrum.pdf"
 
 # Initialize Neo4j driver
-print("Connecting to Neo4j...")
-driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+print("Connecting to Neo4j database...")
+# Connect to Neo4j database
+driver = GraphDatabase.driver(
+    os.getenv("NEO4J_URI"), 
+    auth=(
+        os.getenv("NEO4J_USERNAME"), 
+        os.getenv("NEO4J_PASSWORD")
+    )
+)
 print("Connected successfully!")
 
 # Initialize LLM
@@ -145,7 +157,7 @@ RETURN chunkText +
        score
 ORDER BY score DESC
 """
-
+#Vector Cypher Retriever for performing semantic search and graph-aware retrieval (graph traversal)
 vector_cypher_retriever = VectorCypherRetriever(
     driver=driver,
     index_name="chunk_embeddings",
@@ -177,6 +189,7 @@ def query_knowledge_graph(question, top_k=3):
         )
         
         print(f"\nAnswer:\n{response.answer}")
+        print(f"\nCONTEXT:\n", response.retriever_result.items)
         
         print(f"\n--- Retrieved Context Chunks ({len(response.items)} items) ---")
         for idx, item in enumerate(response.items, 1):
