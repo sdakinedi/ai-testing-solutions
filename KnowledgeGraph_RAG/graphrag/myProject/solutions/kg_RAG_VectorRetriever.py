@@ -40,7 +40,7 @@ print("Connected successfully!")
 # ---------------------------------------------------------------------
 
 print("\nInitializing OpenAI LLM...")
-llm = get_llm()  # If you want temperature=0.1, change get_llm in common.py accordingly.
+llm = get_llm()  
 
 print("Initializing embeddings...")
 embedder = get_embedder()
@@ -91,7 +91,7 @@ if kg_result:
     print(f"Status: {kg_result}")
 
 # ---------------------------------------------------------------------
-# Vector index (separated into helper module)
+# Vector index on Chunk nodes
 # ---------------------------------------------------------------------
 
 print("\nEnsuring vector index on Chunk nodes...")
@@ -102,21 +102,20 @@ ensure_chunk_vector_index(
     embedding_property="embedding",
     dimensions=1536,
 )
-print("Vector index step completed.")
+print("Vector index has been completed.")
 
 # ---------------------------------------------------------------------
-# Vector Retriever (simple, like your movie example)
+# Vector Retriever 
 # ---------------------------------------------------------------------
 
 print("\nInitializing Vector Retriever...")
 
-# We assume your KG builder created nodes like:
+
 #   (:Chunk { text: '...', embedding: <vector> })
 retriever = VectorRetriever(
     driver=driver,
     index_name="chunk_embeddings",
     embedder=embedder,
-    # This becomes item.content
     return_properties=["text"],
 )
 
@@ -148,7 +147,6 @@ if __name__ == "__main__":
     query_knowledge_graph(rag, "What is the role of Scrum Master?")
     query_knowledge_graph(rag, "How does the Product Owner manage the Product Backlog?")
     query_knowledge_graph(rag, "What happens during Sprint Planning?")
-    query_knowledge_graph(rag, "Explain the Daily Scrum ceremony")
 
     # Explore the graph (from utilities.py)
     print("\n\n")
