@@ -5,25 +5,18 @@ from common import get_driver, get_llm
 from utilities import explore_graph_schema, get_entity_info
 from queries import query_knowledge_graph
 
-# ---------------------------------------------------------------------
+
 # Neo4j driver
-# ---------------------------------------------------------------------
-
-print("Connecting to Neo4j database (Text2CypherRetriever)...")
 driver = get_driver()
-print("Connected successfully!")
+print("Connected to Neo4j database successfully!")
 
-# ---------------------------------------------------------------------
+
 # LLM
-# ---------------------------------------------------------------------
-
 print("\nInitializing OpenAI LLM for Text2Cypher & RAG...")
-llm = get_llm()  # configured in common.py
+llm = get_llm() 
 
-# ---------------------------------------------------------------------
+
 # Text2CypherRetriever configuration
-# ---------------------------------------------------------------------
-
 TEXT2CYPHER_SYSTEM_PROMPT = """
 You are an expert Neo4j Cypher generator for a Scrum knowledge graph.
 
@@ -45,10 +38,8 @@ Return results that are useful as textual context for answering the question.
 Do NOT modify the database. Use read-only queries (MATCH, OPTIONAL MATCH, RETURN).
 """
 
-# ---------------------------------------------------------------------
-# Text2CypherRetriever
-# ---------------------------------------------------------------------
 
+# Text2CypherRetriever
 print("\nInitializing Text2CypherRetriever...")
 
 text2cypher_retriever = Text2CypherRetriever(
@@ -59,10 +50,8 @@ text2cypher_retriever = Text2CypherRetriever(
 
 print("Text2CypherRetriever initialized successfully!")
 
-# ---------------------------------------------------------------------
-# GraphRAG pipeline using Text2CypherRetriever
-# ---------------------------------------------------------------------
 
+# GraphRAG pipeline using Text2CypherRetriever
 print("\nCreating GraphRAG pipeline (Text2Cypher)...")
 
 rag = GraphRAG(
@@ -72,14 +61,12 @@ rag = GraphRAG(
 
 print("GraphRAG (Text2Cypher) pipeline ready!")
 
-# ---------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------
 
+# Main
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("KNOWLEDGE GRAPH RAG SYSTEM READY (Text2CypherRetriever)")
-    print("=" * 70)
+    print("\n======================================================")
 
     # Example queries – reuse the shared query helper
     print("\n\nRunning example queries with Text2CypherRetriever...\n")
@@ -88,18 +75,18 @@ if __name__ == "__main__":
     query_knowledge_graph(rag, "How does the Product Owner manage the Product Backlog?", None)
     query_knowledge_graph(rag, "What happens during Sprint Planning?", None)
    
-    # Optional: schema exploration
+    # graph schema exploration
     print("\n\n")
     explore_graph_schema(driver)
 
-    # Optional: specific entity info
+    # specific entity info
     print("\n\n")
     get_entity_info(driver, "Scrum Master")
 
     # Interactive mode
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("INTERACTIVE MODE (Text2CypherRetriever)")
-    print("=" * 70)
+    print("======================================================")
     print("\nYou can now ask questions. Type 'exit' to quit.\n")
 
     try:

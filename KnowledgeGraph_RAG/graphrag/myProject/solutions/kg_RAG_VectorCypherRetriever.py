@@ -7,29 +7,22 @@ from utilities import explore_graph_schema, get_entity_info
 from queries import query_knowledge_graph
 from vector_index import ensure_chunk_vector_index
 
-# ---------------------------------------------------------------------
+
 # Neo4j driver
-# ---------------------------------------------------------------------
-
-print("Connecting to Neo4j database (VectorCypherRetriever)...")
 driver = get_driver()
-print("Connected successfully!")
+print("Connected to Neo4j database successfully!")
 
-# ---------------------------------------------------------------------
+
 # LLM & Embeddings
-# ---------------------------------------------------------------------
-
-print("\nInitializing OpenAI LLM...")
-llm = get_llm()  # max_tokens etc. configured in common.get_llm
+print("\nInitializing LLM...")
+llm = get_llm()  
 
 print("Initializing embeddings...")
-embedder = get_embedder()  # text-embedding-ada-002 by default
+embedder = get_embedder()  
 
-# ---------------------------------------------------------------------
-# Ensure vector index (Chunk nodes) – safe to call even if it exists
-# ---------------------------------------------------------------------
 
-print("\nEnsuring vector index on Chunk nodes...")
+#vector index (Chunk nodes) 
+print("\ vector index on Chunk nodes...")
 ensure_chunk_vector_index(
     driver=driver,
     index_name="chunk_embeddings",
@@ -37,11 +30,11 @@ ensure_chunk_vector_index(
     embedding_property="embedding",
     dimensions=1536,
 )
-print("Vector index step completed.")
+print("Vector index Step completed.")
 
-# ---------------------------------------------------------------------
+
 # Cypher-based graph-aware retrieval query
-# ---------------------------------------------------------------------
+
 # This query:
 #  - Starts from the 'node' (the chunk returned by vector search) and its score.
 #  - Finds entities connected via :FROM_CHUNK.
@@ -85,10 +78,8 @@ RETURN
 ORDER BY score DESC
 """
 
-# ---------------------------------------------------------------------
-# VectorCypherRetriever
-# ---------------------------------------------------------------------
 
+# VectorCypherRetriever
 print("\nInitializing VectorCypherRetriever...")
 
 vector_cypher_retriever = VectorCypherRetriever(
@@ -100,10 +91,8 @@ vector_cypher_retriever = VectorCypherRetriever(
 
 print("VectorCypherRetriever initialized successfully!")
 
-# ---------------------------------------------------------------------
-# GraphRAG pipeline using VectorCypherRetriever
-# ---------------------------------------------------------------------
 
+# GraphRAG pipeline using VectorCypherRetriever
 print("\nCreating GraphRAG pipeline (VectorCypher)...")
 
 rag = GraphRAG(
@@ -113,14 +102,12 @@ rag = GraphRAG(
 
 print("GraphRAG (VectorCypher) pipeline ready!")
 
-# ---------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------
 
+# Main
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("KNOWLEDGE GRAPH RAG SYSTEM READY (VectorCypherRetriever)")
-    print("=" * 70)
+    print("======================================================")
 
     # Example queries using the shared query helper
     print("\n\nRunning example queries with VectorCypherRetriever...\n")
@@ -139,9 +126,9 @@ if __name__ == "__main__":
     get_entity_info(driver, "Scrum Master")
 
     # Interactive mode
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("INTERACTIVE MODE (VectorCypherRetriever)")
-    print("=" * 70)
+    print("======================================================")
     print("\nYou can now ask questions. Type 'exit' to quit.\n")
 
     try:

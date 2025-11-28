@@ -7,9 +7,9 @@ def query_knowledge_graph(rag, question: str, top_k: int = 3):
     :param question: user question
     :param top_k: number of context items to retrieve (if retriever supports it)
     """
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print(f"Question: {question}")
-    print("=" * 70)
+    print("======================================================")
 
     try:
         retriever_config = {"top_k": top_k} if top_k is not None else {}
@@ -17,14 +17,13 @@ def query_knowledge_graph(rag, question: str, top_k: int = 3):
         response = rag.search(
             query_text=question,
             retriever_config=retriever_config,
-            return_context=False
+            return_context=True
         )
 
         print(f"\nAnswer:\n{response.answer}")
-
-        print(f"\nTotal Response is:\n{response}")
-
-       
+        print("\nRetrieved Context:", response.retriever_result.items)
+        print("\nRetrieved Result is::\n", response.retriever_result.metadata["cypher"])
+  
 
     except Exception as e:
         print(f"Error during query: {e}")

@@ -1,16 +1,18 @@
 import os
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from neo4j import GraphDatabase
 import json
 
+from openai import api_key
+
 # STEP 1: Load and Process PDF Documents
 loaders = [
-    PyPDFLoader("C:\\Users\\Satyaprasad_Dakinedi\\Desktop\\guideToScrum.pdf"),
+    PyPDFLoader("C:\\Users\\SatyaprasadDakinedi\\Desktop\\guideToScrum.pdf"),
 ]
 docs = []
 for loader in loaders:
@@ -32,12 +34,12 @@ print(f"############ Total chunks: {len(chunks)}")
 openai_api_key = os.getenv("OPENAI_API_KEY")  
 
 embeddings = OpenAIEmbeddings(
-    openai_api_key=openai_api_key,
+    api_key=openai_api_key,
     model="text-embedding-ada-002"
 )
 
 llm = ChatOpenAI(
-    openai_api_key=openai_api_key,
+    api_key=openai_api_key,
     model="gpt-3.5-turbo",
     temperature=0
 )
@@ -155,9 +157,9 @@ class Neo4jKnowledgeGraph:
 # STEP 5: Build the Knowledge Graph
 #####################################
 # Initialize Neo4j Aura (cloud instance)
-NEO4J_URI = "neo4j+s://3f713ff7.databases.neo4j.io"
+NEO4J_URI = "neo4j+s://307436bd.databases.neo4j.io"
 NEO4J_USER = "neo4j"
-NEO4J_PASSWORD = "5Q-QUg1_JDCH7mSjk0Z2iQjd4dkOuirWz3yBuu95A4k"
+NEO4J_PASSWORD = "s4CH33KCcrMZDpgRBGPnIcHXINCUnyrSKy96sIiOnMw"
 
 kg = Neo4jKnowledgeGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
 kg_builder = KnowledgeGraphBuilder(llm)

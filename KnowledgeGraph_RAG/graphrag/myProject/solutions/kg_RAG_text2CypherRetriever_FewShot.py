@@ -5,25 +5,20 @@ from common import get_driver, get_llm
 from utilities import explore_graph_schema, get_entity_info
 from queries import query_knowledge_graph
 
-# ---------------------------------------------------------------------
-# Neo4j driver
-# ---------------------------------------------------------------------
 
+# Neo4j driver
 print("Connecting to Neo4j database (Text2Cypher + few-shot)...")
 driver = get_driver()
-print("Connected successfully!")
+print("Connected to Neo4j database successfully!")
 
-# ---------------------------------------------------------------------
+
 # LLM (shared for Text2Cypher + RAG answer generation)
-# ---------------------------------------------------------------------
-
-print("\nInitializing OpenAI LLM for Text2Cypher & RAG...")
+print("\nInitializing LLM for Text2Cypher & RAG...")
 llm = get_llm()
-t2c_llm = llm  # just an alias to mirror your original pattern
+t2c_llm = llm 
 
-# ---------------------------------------------------------------------
+
 # Few-shot examples for Text2CypherRetriever
-# ---------------------------------------------------------------------
 # These examples are specific to the given Scrum KG schema.
 # They teach the LLM how to map natural language to Cypher queries.
 
@@ -58,10 +53,8 @@ examples = [
     ),
 ]
 
-# ---------------------------------------------------------------------
-# Text2CypherRetriever
-# ---------------------------------------------------------------------
 
+# Text2CypherRetriever
 print("\nInitializing Text2CypherRetriever with few-shot examples...")
 
 retriever = Text2CypherRetriever(
@@ -72,10 +65,8 @@ retriever = Text2CypherRetriever(
 
 print("Text2CypherRetriever initialized successfully!")
 
-# ---------------------------------------------------------------------
-# GraphRAG pipeline using Text2CypherRetriever
-# ---------------------------------------------------------------------
 
+# GraphRAG pipeline using Text2CypherRetriever
 print("\nCreating GraphRAG pipeline (Text2Cypher + few-shot)...")
 
 rag = GraphRAG(
@@ -85,14 +76,12 @@ rag = GraphRAG(
 
 print("GraphRAG (Text2Cypher + few-shot) pipeline ready!")
 
-# ---------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------
 
+# Main
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("KNOWLEDGE GRAPH RAG SYSTEM READY (Text2CypherRetriever + examples)")
-    print("=" * 70)
+    print("\n======================================================")
 
     # Example queries — reuse shared query helper
     print("\n\nRunning example queries with Text2CypherRetriever (few-shot)...\n")
@@ -101,18 +90,18 @@ if __name__ == "__main__":
     query_knowledge_graph(rag, "How does the Product Owner manage the Product Backlog?", top_k=None)
     query_knowledge_graph(rag, "What happens during Sprint Planning?", top_k=None)
 
-    # Optional: schema exploration
+    #  schema exploration
     print("\n\n")
     explore_graph_schema(driver)
 
-    # Optional: specific entity info
+    # specific entity info
     print("\n\n")
     get_entity_info(driver, "Scrum Master")
 
     # Interactive mode
-    print("\n" + "=" * 70)
+    print("\n======================================================")
     print("INTERACTIVE MODE (Text2CypherRetriever with examples)")
-    print("=" * 70)
+    print("======================================================")
     print("\nYou can now ask questions. Type 'exit' to quit.\n")
 
     try:
