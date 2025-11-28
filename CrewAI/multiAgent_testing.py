@@ -5,10 +5,24 @@ from crewai import Agent, Task, Crew
 import os
 import json
 from datetime import datetime
+from langchain_openai.chat_models import AzureChatOpenAI
 
 # Set up OpenAI API
 openai_api_key = os.environ["OPENAI_API_KEY"]
+#openai_api_key = os.getenv("DIAL_API_KEY")
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-3.5-turbo'
+api_key = os.getenv("DIAL_API_KEY")
+#print(f"Using API Key: {api_key[:4]}****{api_key[-4:]}")
+
+
+llm = AzureChatOpenAI(
+    openai_api_version="2023-07-01-preview",
+    api_key=api_key,
+    azure_endpoint="https://ai-proxy.lab.epam.com",
+    azure_deployment="gpt-35-turbo",
+    model="gpt-35-turbo"
+)
+
 
 
 # AGENTS 
@@ -259,22 +273,23 @@ def run_testing_crew(user_story, iteration_name="Sprint-1", enable_human_input=F
     )
     
     # Execute the crew
-    print(f"\n{'='*80}")
+    print(f"\n############################")
     print(f"Starting Testing Activities for: {iteration_name}")
     print(f"User Story: {user_story}")
-    print(f"{'='*80}\n")
+    print(f"##############################\n")
     
     result = testing_crew.kickoff(inputs={
         "user_story": user_story,
         "iteration": iteration_name
     })
     
-    # Save to JSON file (optional)
+    # Save to JSON file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"testing_report_{iteration_name}_{timestamp}.json"
     
     try:
-        # Try to parse result as JSON, if not, create structured output
+        # Try to parse result as JSON, 
+        # if not, create structured output
         if isinstance(result, str):
             output_data = {
                 "metadata": {
@@ -291,9 +306,9 @@ def run_testing_crew(user_story, iteration_name="Sprint-1", enable_human_input=F
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
         
-        print(f"\n{'='*80}")
+        print(f"\n############################")
         print(f"Report saved to: {filename}")
-        print(f"{'='*80}\n")
+        print(f"##############################\n")
         
     except Exception as e:
         print(f"Error saving JSON file: {e}")
@@ -317,9 +332,9 @@ if __name__ == "__main__":
         enable_human_input=True
     )
     
-    print("\n" + "="*80)
+    print("\n############################")
     print("TESTING CREW EXECUTION COMPLETED")
-    print("="*80)
+    print("##############################")
     print("\nResult Below:")
     print(str(result)[:500] + "..." if len(str(result)) > 500 else str(result))
     
